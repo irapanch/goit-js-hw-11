@@ -88,7 +88,7 @@ function onFormInput(event) {
 
 async function onClickLoadBtn() { // виконується при кліку на кнопку прокрутки
   page++; // збільшує значення змінної page на одиницю
-  if (page === totalPage) {
+  if (page === totalPage + 1) {
     loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn
 
      Notify.failure( 
