@@ -82,41 +82,6 @@ function onFormInput(event) {
   }
 }
 
-
-
-
-
-async function onClickLoadBtn() { // виконується при кліку на кнопку прокрутки
-  page++; // збільшує значення змінної page на одиницю
-  if (page === totalPage) {
-    loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn
-
-     Notify.failure( 
-          `Sorry, there are no images matching your search query. Please try again.`,  // У такому разі показується повідомлення
-          {
-            position: 'left-top',
-            timeout: 2000,
-          }
-        );
-  }
-  try {
-    const respData = await getImages(page);  // виконується асинхронний запит до getImages з передачею значення page
-    renderGallery(respData.data.hits);  //  функція  рендерить галерею на основі отриманих даних
-    const { height: cardHeight } =
-      gallery.firstElementChild.getBoundingClientRect(); //плавне прокручування сторінки після запиту і відтворення кожної наступної групи зображень
-
-    window.scrollBy({  
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
-  } catch (error) {
-    Notify.failure(`Oops, something went wrong`);
-  }
-}
-
-
-
-// =================================================================
 async function onFormSubmit(event) {  //виконується при відправленні форми
 
   event.preventDefault(); // скидання базових налаштувань
@@ -141,7 +106,7 @@ async function onFormSubmit(event) {  //виконується при відпр
       }
       if (respData.data.totalHits > 0) {  // перевірка кількості знайдених зображень. 
         Notify.info(`Hooray! We found ${respData.data.totalHits} images.`, { // виведення повідомлення з кількістю знайдених зображень
-          timeout: 5000,
+          timeout: 600,
         });
         if (respData.data.totalHits <= per_page) {  // перевірка кількості знайдених зображень. 
           loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки якщо їх менше, ніж ліміт на сторінці
@@ -158,6 +123,38 @@ async function onFormSubmit(event) {  //виконується при відпр
   lightbox.refresh(); //  реініціалізація лайтбоксу
 }
 
+
+async function onClickLoadBtn() { // виконується при кліку на кнопку прокрутки
+  page++; // збільшує значення змінної page на одиницю
+  if (page === totalPage) {
+    loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn
+
+     Notify.failure( 
+          `We're sorry, but you've reached the end of search results.`,  // У такому разі показується повідомлення
+          {
+            position: 'left-top',
+            timeout: 2000,
+          }
+        );
+  }
+  try {
+    const respData = await getImages(page);  // виконується асинхронний запит до getImages з передачею значення page
+    renderGallery(respData.data.hits);  //  функція  рендерить галерею на основі отриманих даних
+    const { height: cardHeight } =
+      gallery.firstElementChild.getBoundingClientRect(); //плавне прокручування сторінки після запиту і відтворення кожної наступної групи зображень
+
+    window.scrollBy({  
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+  } catch (error) {
+    Notify.failure(`Oops, something went wrong`);
+  }
+}
+
+
+
+// =================================================================
 
 
 
@@ -186,7 +183,7 @@ async function onFormSubmit(event) {  //виконується при відпр
 //       }
 //       if (respData.data.totalHits > 0) {  // перевірка кількості знайдених зображень.
 //         Notify.info(`Hooray! We found ${respData.data.totalHits} images.`, { // виведення повідомлення з кількістю знайдених зображень
-//           timeout: 5000,
+//           timeout: 600,
 //         });
 //         if (respData.data.totalHits < 40) {  // перевірка кількості знайдених зображень.
 //           loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки
