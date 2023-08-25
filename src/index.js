@@ -122,7 +122,7 @@ async function onFormSubmit(event) {  //виконується при відпр
   event.preventDefault(); // скидання базових налаштувань
   gallery.innerHTML = ''; // видаляє вміст елементу відображення галереї зображень
   page = 1; //задаємо початкову сторінку для отримання зображень.
-  
+  console.log(1);
     loadBtn.classList.add('is-hidden'); // спочатку приховуємо кнопку прокрутки
     try {
         const respData = await getImages(page); // викликаємо функцію, яка запитує зображення з сервера з вказаною сторінкою.
