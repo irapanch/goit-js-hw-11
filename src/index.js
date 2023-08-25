@@ -92,7 +92,7 @@ async function onFormSubmit(event) {  //виконується при відпр
   page = 1; //задаємо початкову сторінку для отримання зображень.
 
   query = form.elements.searchQuery.value; // отримуємо введені дані з пошуку
-  console.log(query); 
+  // console.log(query); 
   loadBtn.classList.add('is-hidden'); // спочатку приховуємо кнопку прокрутки
     try {
         let response = await getImages(page, query); // викликаємо функцію, яка запитує зображення з сервера з вказаною сторінкою за означеним запитом
