@@ -89,15 +89,15 @@ function onFormInput(event) {
 async function onClickLoadBtn() { // виконується при кліку на кнопку прокрутки
   page++; // збільшує значення змінної page на одиницю
   if (page === totalPage) {
-    loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn 
+    loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn
 
-    Notify.info(  // і викликаємо сповіщення, що немає зображень, що відповідають запиту.
-      `Sorry, there are no images matching your search query. Please try again.`,
-      {
-        position: 'right-top',
-        timeout: 2000,
-      }
-    );
+     Notify.failure( 
+          `Sorry, there are no images matching your search query. Please try again.`,  // У такому разі показується повідомлення
+          {
+            position: 'left-top',
+            timeout: 2000,
+          }
+        );
   }
   try {
     const respData = await getImages(page);  // виконується асинхронний запит до getImages з передачею значення page
@@ -129,7 +129,7 @@ async function onFormSubmit(event) {  //виконується при відпр
  
       //цей блок коду виконується після успішного отримання відповіді від сервера
       totalPage = Math.ceil(respData.data.totalHits / per_page); // розрахунок кількості сторінок
-      renderImageGallery(respData.data.hits); // відображення галереї зображень  перевірка кількості знайдених зображень
+      renderGallery(respData.data.hits); // відображення галереї зображень  перевірка кількості знайдених зображень
       if (respData.data.total === 0) { // перевірка кількості знайдених зображень. Якщо бекенд повертає порожній масив, значить нічого підходящого не було знайдено 
         Notify.failure( 
           `Sorry, there are no images matching your search query. Please try again.`,  // У такому разі показується повідомлення
