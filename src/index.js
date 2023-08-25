@@ -88,7 +88,7 @@ function onFormInput(event) {
 
 async function onClickLoadBtn() { // виконується при кліку на кнопку прокрутки
   page++; // збільшує значення змінної page на одиницю
-  if (page === totalPage + 1) {
+  if (page === totalPage) {
     loadBtn.classList.add('is-hidden'); // якщо page дорівнює totalPage, то додаємо клас "is-hidden" до елементу loadBtn
 
      Notify.failure( 
@@ -122,7 +122,7 @@ async function onFormSubmit(event) {  //виконується при відпр
   event.preventDefault(); // скидання базових налаштувань
   gallery.innerHTML = ''; // видаляє вміст елементу відображення галереї зображень
   page = 1; //задаємо початкову сторінку для отримання зображень.
-  console.log(1);
+
     loadBtn.classList.add('is-hidden'); // спочатку приховуємо кнопку прокрутки
     try {
         const respData = await getImages(page); // викликаємо функцію, яка запитує зображення з сервера з вказаною сторінкою.
@@ -145,7 +145,7 @@ async function onFormSubmit(event) {  //виконується при відпр
         });
         if (respData.data.totalHits <= per_page) {  // перевірка кількості знайдених зображень. 
           loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки якщо їх менше, ніж ліміт на сторінці
-        } else {
+        }else{
           loadBtn.classList.remove('is-hidden');// або показуємо кнопку прокрутки
           }
         }
