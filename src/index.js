@@ -74,7 +74,7 @@ function onFormInput(event) {
   // виконується, коли відбувається введення в поле форми.
   event.preventDefault(); // скидання базових налаштувань
   loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки
-  btnSearch.disabled = true;
+  btnSearch.disabled = true; // вимкнення  можливості натискання кнопки  пошуку
   const userInput = event.target.value.trim(); // отримує значення, введене в поле форми. Потім, за допомогою методу trim(), вона видаляє зайві пробіли зі значення.
 
   if (userInput.trim() !== '') {
@@ -129,7 +129,7 @@ async function onFormSubmit(event) {  //виконується при відпр
  
       //цей блок коду виконується після успішного отримання відповіді від сервера
       totalPage = Math.ceil(respData.data.totalHits / per_page); // розрахунок кількості сторінок
-      renderGallery(respData.data.hits); // відображення галереї зображень  перевірка кількості знайдених зображень
+      renderGallery(respData.data.hits); // відображення галереї зображень  
       if (respData.data.total === 0) { // перевірка кількості знайдених зображень. Якщо бекенд повертає порожній масив, значить нічого підходящого не було знайдено 
         Notify.failure( 
           `Sorry, there are no images matching your search query. Please try again.`,  // У такому разі показується повідомлення
@@ -143,8 +143,8 @@ async function onFormSubmit(event) {  //виконується при відпр
         Notify.info(`Hooray! We found ${respData.data.totalHits} images.`, { // виведення повідомлення з кількістю знайдених зображень
           timeout: 5000,
         });
-        if (respData.data.totalHits < 40) {  // перевірка кількості знайдених зображень. 
-          loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки
+        if (respData.data.totalHits <= per_page) {  // перевірка кількості знайдених зображень. 
+          loadBtn.classList.add('is-hidden'); // приховуємо кнопку прокрутки якщо їх менше, ніж ліміт на сторінці
         } else {
           loadBtn.classList.remove('is-hidden');// або показуємо кнопку прокрутки
           }
